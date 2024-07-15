@@ -71,7 +71,7 @@ public class RestEngineService {
             }
         };
 
-        ScheduledFuture<?> scheduledTask = executorService.scheduleAtFixedRate(serviceTask, 0, 1, TimeUnit.SECONDS);
+        ScheduledFuture<?> scheduledTask = executorService.scheduleAtFixedRate(serviceTask, 0, 30, TimeUnit.SECONDS);
         logger.info("Service was started. Service configuration ID: " + configuration.getId());
         runningTasks.put(service.getId(), scheduledTask);
         return service;
