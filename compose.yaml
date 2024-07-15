@@ -1,0 +1,49 @@
+version: 3.x
+
+services:
+  db:
+    image: postgres:latest
+    container_name: rest-engine-db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d rest_engine" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rest_engine
+    volumes:
+      - ./src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          memory: "4gb"
+  elk:
+    image: elasticsearch:8.6.2
+    container_name: rest-engine-elk
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+  kibana:
+    image: kibana:8.6.2
+    container_name: rest-engine-kibana
+    restart: unless-stopped
+    depends_on:
+      - elk
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elk:9200
+      ELASTICSEARCH_HOSTS: http://elk:9200
+    deploy:
+      resources:
+        limits:
+          memory: "2gb"
