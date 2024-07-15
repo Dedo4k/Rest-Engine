@@ -66,20 +66,13 @@ public class RestEngineService {
                 configuration.getInitialDelay(),
                 configuration.getPeriod(),
                 TimeUnit.SECONDS);
-        logger.info("Service was started. Service configuration ID: " + configuration.getId());
+
         runningTasks.put(service.getId(), scheduledTask);
         return service;
     }
 
     public int stopService(int id) {
-        try {
-            boolean cancel = runningTasks.get(id).cancel(true);
-            runningTasks.remove(id);
-            logger.info("Service was stopped. Service configuration ID: " + id);
-            return Boolean.compare(cancel, false);
-        } catch (NullPointerException e) {
-            throw new ServiceConfigurationException("Service configuration not found with id:" + id);
-        }
+        return executorService.cancelTask(id);
     }
 
     public EngineInfo getInfo() {
