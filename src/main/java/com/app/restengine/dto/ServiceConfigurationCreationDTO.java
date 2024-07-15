@@ -14,4 +14,6 @@ public class ServiceConfigurationCreationDTO {
     public HashMap<String, String> queryParams = new HashMap<>();
     public HashMap<String, String> headers = new HashMap<>();
     public HashMap<String, Object> body = new HashMap<>();
+    public long initialDelay;
+    public long period;
 }

@@ -19,7 +19,7 @@ public class ServiceData {
     @Field(type = FieldType.Date)
     @CreatedDate
     private Instant timestamp;
-    @Field(type = FieldType.Object, enabled = false)
+    @Field(type = FieldType.Object)
     private ResponseEntity<String> response;
 
     public ServiceData(int serviceId, Instant timestamp, ResponseEntity<String> response) {

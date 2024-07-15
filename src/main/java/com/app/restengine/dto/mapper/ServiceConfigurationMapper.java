@@ -13,7 +13,9 @@ public class ServiceConfigurationMapper {
                 dto.method,
                 dto.queryParams,
                 dto.headers,
-                dto.body);
+                dto.body,
+                dto.initialDelay,
+                dto.period);
     }
 
     public static ServiceConfigurationDTO toDTO(ServiceConfiguration entity) {

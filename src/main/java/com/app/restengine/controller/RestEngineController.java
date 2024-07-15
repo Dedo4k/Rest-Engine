@@ -1,5 +1,6 @@
 package com.app.restengine.controller;
 
+import com.app.restengine.domain.EngineInfo;
 import com.app.restengine.domain.ServiceConfiguration;
 import com.app.restengine.dto.ServiceConfigurationCreationDTO;
 import com.app.restengine.dto.ServiceConfigurationIdDTO;
@@ -8,10 +9,7 @@ import com.app.restengine.service.RestEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/engine")
@@ -31,7 +29,12 @@ public class RestEngineController {
     }
 
     @PostMapping("/stop/{id}")
-    public ResponseEntity<Boolean> stopService(@PathVariable int id) {
+    public ResponseEntity<Integer> stopService(@PathVariable int id) {
         return ResponseEntity.ok(restEngine.stopService(id));
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<EngineInfo> getInfo() {
+        return ResponseEntity.ok(restEngine.getInfo());
     }
 }

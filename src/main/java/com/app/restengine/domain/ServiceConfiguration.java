@@ -33,12 +33,20 @@ public class ServiceConfiguration {
     @Convert(converter = HashMapConverter.class)
     private HashMap<String, Object> body = new HashMap<>();
 
+    @Column(name = "initial_delay")
+    private long initialDelay;
+    @Column(name = "period")
+    private long period;
+
     public ServiceConfiguration(String uri, HttpMethod method, HashMap<String, String> queryParams,
-                                HashMap<String, String> headers, HashMap<String, Object> body) {
+                                HashMap<String, String> headers, HashMap<String, Object> body,
+                                long initialDelay, long period) {
         this.uri = uri;
         this.method = method;
         this.queryParams = queryParams;
         this.headers = headers;
         this.body = body;
+        this.initialDelay = initialDelay;
+        this.period = period;
     }
 }
